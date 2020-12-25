@@ -1,3 +1,4 @@
+
 import { BasicModel } from './../models/basic';
 import * as express from 'express';
 import { Router, Request, Response } from 'express';
@@ -39,5 +40,6 @@ router.get('/subdistrict', async (req: Request, res: Response) => {
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
   }
 });
+
 
 export default router;
