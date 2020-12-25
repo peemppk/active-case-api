@@ -14,32 +14,22 @@ const jwt = new Jwt();
 
 const router: Router = Router();
 
-router.post('/customer', async (req: Request, res: Response) => {
-  let username: string = req.body.username;
-  let password: string = req.body.password;
-
+router.post('/staff', async (req: Request, res: Response) => {
+  let telephone: string = req.body.telephone;
   let db = req.db;
-
   try {
-    let encPassword = crypto.createHash('md5').update(password).digest('hex');
-    let rs: any = await loginModel.login(db, username, encPassword);
-
+    const rs: any = await loginModel.loginStaff(db, telephone);
     if (rs.length) {
-
-      let payload = {
-        fullname: `${rs[0].first_name} ${rs[0].last_name}`,
-        id: rs[0].user_id,
-      }
-
-      let token = jwt.sign(payload);
-      res.send({ ok: true, token: token, code: HttpStatus.OK });
-    } else {
-      res.send({ ok: false, error: 'Login failed!', code: HttpStatus.UNAUTHORIZED });
+      const rsp = await loginModel.sendOTP(telephone);
+      res.send(rsp);
+    }else {
+      res.send({ok:false,error:'ไม่พบบัญชีผู้ใช้'});
     }
   } catch (error) {
+    console.log(error);
+    
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
   }
-
 });
 
 export default router;
