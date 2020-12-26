@@ -152,7 +152,6 @@ router.post('/upload-document/:id/:type', upload.any(), async (req: Request, res
 
 });
 
-
 router.get('/pre', async (req: Request, res: Response) => {
   let telephone: string = req.query.telephone;
   let db = req.db;

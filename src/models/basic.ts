@@ -6,11 +6,23 @@ export class BasicModel {
     return db('province');
   }
 
-  getDistrict(db: Knex) {
-    return db('district');
+  getDistrict(db: Knex, provinceCode = null) {
+    const sql = db('district')
+    if (provinceCode) {
+      sql.where('province_code', provinceCode);
+    }
+    return sql;
   }
 
-  getSubDistrict(db: Knex) {
-    return db('subdistrict');
+  getSubDistrict(db: Knex, provinceCode = null, ampurCode = null) {
+    const sql = db('subdistrict')
+    if (provinceCode) {
+      sql.where('province_code', provinceCode);
+    }
+    if (ampurCode) {
+      sql.where('ampur_code', ampurCode);
+    }
+    return sql;
+
   }
 }
