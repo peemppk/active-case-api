@@ -18,7 +18,7 @@ export class ServiceModel {
 
   findInfo(db: Knex, serialNo, eventId) {
     return db('services')
-      .where('serial_no', serialNo)
+      .where('serial_code', serialNo)
       .where('event_id', eventId)
   }
 }
