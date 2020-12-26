@@ -21,6 +21,7 @@ import loginRoute from './routes/login';
 import serviceRoute from './routes/services';
 import eventRoute from './routes/event';
 import registerRoute from './routes/register';
+import userRoute from './routes/user';
 
 // Assign router to the express.Router() instance
 const app: express.Application = express();
@@ -98,7 +99,8 @@ let checkAuth = (req: Request, res: Response, next: NextFunction) => {
 app.use('/login', loginRoute);
 app.use('/api', checkAuth, serviceRoute);
 app.use('/event', checkAuth, eventRoute);
-app.use('/register', registerRoute);
+app.use('/register',checkAuth, registerRoute);
+app.use('/users',checkAuth, userRoute);
 app.use('/', indexRoute);
 
 //error handlers

@@ -80,4 +80,24 @@ router.post('/user', async (req: Request, res: Response) => {
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
   }
 });
+
+router.post('/admin', async (req: Request, res: Response) => {
+  const password: string = req.body.password;
+  try {
+    
+      if (password === 'icT@Moph') {
+        const payload = {
+          first_name: 'first_name',
+          last_name: 'last_name'
+        }
+        const token = await jwt.sign(payload);
+        res.send({ ok: true, token: token });
+      } else {
+        res.send({ ok: false, error: 'ไม่พบข้อมูล' })
+      }
+  } catch (error) {
+    console.log(error);
+    res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
+  }
+});
 export default router;
