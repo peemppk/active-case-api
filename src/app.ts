@@ -98,7 +98,7 @@ let checkAuth = (req: Request, res: Response, next: NextFunction) => {
 app.use('/login', loginRoute);
 app.use('/api', checkAuth, serviceRoute);
 app.use('/event', checkAuth, eventRoute);
-app.use('/register', checkAuth, registerRoute);
+app.use('/register', registerRoute);
 app.use('/', indexRoute);
 
 //error handlers

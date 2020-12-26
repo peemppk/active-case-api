@@ -9,8 +9,25 @@ export class RegisterModel {
       .where('telephone', telephone)
   }
 
-  savePreRigister(db: Knex, data) {
+  savePreRegister(db: Knex, data) {
     return db('pre_registers')
-      .insert(data);
+      .insert(data,'id');
+  }
+
+  updatePreRegister(db:Knex,id,data){
+    return db('pre_registers')
+    .update(data)
+    .where('id',id);
+  }
+
+  saveRegister(db: Knex, data) {
+    return db('registers')
+      .insert(data,'id');
+  }
+
+  updateRegister(db:Knex,id,data){
+    return db('registers')
+    .update(data)
+    .where('id',id);
   }
 }

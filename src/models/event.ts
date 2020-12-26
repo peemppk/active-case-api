@@ -24,8 +24,9 @@ export class EventModel {
     return db('events')
       .insert(data);
   }
-  updateEvent(db: Knex, data) {
+  updateEvent(db: Knex, id, data) {
     return db('events')
-      .update(data);
+      .update(data)
+      .where('id', id)
   }
 }

@@ -32,12 +32,12 @@ router.post('/', async (req: Request, res: Response) => {
   const endDate: string = req.body.endDate;
   try {
 
-    if(distinctCode && subdistinceCode&& provinceCode&&startDate){
+    if (distinctCode && subdistinceCode && provinceCode && startDate) {
       let code = randomNumber(4);
       while ((await eventModel.checkCodeDup(db, code)).length > 0) {
         code = randomNumber(4);
       }
-  
+
       const data: any = {
         code,
         place_detail: placeDetail,
@@ -54,7 +54,7 @@ router.post('/', async (req: Request, res: Response) => {
       const rs: any = await eventModel.saveEvent(db, data);
       res.send({ ok: true, rows: data });
     } else {
-      res.send({ ok: false, error:'parameter ไม่ครบ'});
+      res.send({ ok: false, error: 'parameter ไม่ครบ' });
     }
   } catch (error) {
     console.log(error);
@@ -66,6 +66,7 @@ router.put('/', async (req: Request, res: Response) => {
   let db = req.db;
   let hospcode: string = req.decoded.hospcode;
   const updatedBy: string = req.decoded.id;
+  const eventId: string = req.body.eventId;
   const placeDetail: string = req.body.placeDetail;
   const distinctCode: string = req.body.distinctCode;
   const subdistinceCode: string = req.body.subdistinceCode;
@@ -76,12 +77,12 @@ router.put('/', async (req: Request, res: Response) => {
   const endDate: string = req.body.endDate;
   try {
 
-    if(distinctCode && subdistinceCode&& provinceCode&&startDate){
+    if (distinctCode && subdistinceCode && provinceCode && startDate) {
       let code = randomNumber(4);
       while ((await eventModel.checkCodeDup(db, code)).length > 0) {
         code = randomNumber(4);
       }
-  
+
       const data: any = {
         code,
         place_detail: placeDetail,
@@ -95,10 +96,10 @@ router.put('/', async (req: Request, res: Response) => {
         updated_by: updatedBy,
         hospcode
       }
-      const rs: any = await eventModel.updateEvent(db, data);
+      const rs: any = await eventModel.updateEvent(db, eventId, data);
       res.send({ ok: true, rows: data });
     } else {
-      res.send({ ok: false, error:'parameter ไม่ครบ'});
+      res.send({ ok: false, error: 'parameter ไม่ครบ' });
     }
   } catch (error) {
     console.log(error);
