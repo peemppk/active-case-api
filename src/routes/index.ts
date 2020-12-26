@@ -25,7 +25,7 @@ router.get('/province', async (req: Request, res: Response) => {
 
 router.get('/district', async (req: Request, res: Response) => {
   try {
-    const rs: any = await basicModel.getSubDistrict(req.db);
+    const rs: any = await basicModel.getDistrict(req.db);
     res.send({ ok: true, rows: rs, code: HttpStatus.OK });
   } catch (error) {
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
@@ -34,7 +34,7 @@ router.get('/district', async (req: Request, res: Response) => {
 
 router.get('/subdistrict', async (req: Request, res: Response) => {
   try {
-    const rs: any = await basicModel.getDistrict(req.db);
+    const rs: any = await basicModel.getSubDistrict(req.db);
     res.send({ ok: true, rows: rs, code: HttpStatus.OK });
   } catch (error) {
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
