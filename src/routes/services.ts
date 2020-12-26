@@ -14,8 +14,9 @@ const router: Router = Router();
 router.get('/', async (req: Request, res: Response) => {
 
   let db = req.db;
+  let eventId = req.query.eventId;
   try {
-    const rs: any = await serviceModel.getService(db);
+    const rs: any = await serviceModel.getService(db, eventId);
     res.send({ ok: true, rows: rs });
   } catch (error) {
     console.log(error);

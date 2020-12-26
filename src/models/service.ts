@@ -2,8 +2,9 @@ import * as Knex from 'knex';
 
 export class ServiceModel {
 
-  getService(db: Knex) {
+  getService(db: Knex, eventId) {
     return db('services')
+      .where('event_id', eventId)
   }
 
   getEditService(db: Knex, telephone) {
