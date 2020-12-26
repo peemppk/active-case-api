@@ -29,7 +29,7 @@ router.post('/pre', async (req: Request, res: Response) => {
   let birthDate: string = req.body.birthDate;
   let telephone: string = req.body.telephone;
   let pictureProfile: string = req.body.pictureProfile; //base64
-  let documentFile: string = req.body.documentFile;
+  let documentFile: string = req.body.documentFile; //base64
   let documentType: string = req.body.documentType;
   let cid: string = req.body.cid;
   let patientType: string = req.body.patientType;
@@ -41,14 +41,22 @@ router.post('/pre', async (req: Request, res: Response) => {
 
   let db = req.db;
   try {
-    res.send({ ok: true });
-    // if()
-    // const rs: any = await registerModel.savePreRigister(db, data);
-    // if(rs.length){
-    //   res.send({ ok: true, rows: rs[0] });
-    // } else {
-    //   res.send({ ok: false });
-    // }
+    if (nationTypeId && patientType && gender) {
+      const data: any = {
+        first_name: firstName,
+        last_name: lastName,
+        title_name: titleName,
+        birth_date: birthDate,
+        telephone_boss: telephoneBoss,
+        telephone,
+        cid,
+        passport
+      }
+      await registerModel.savePreRigister(db, data);
+      res.send({ ok: true });
+    } else {
+      res.send({ ok: false, error: 'Parameter ไม่ครบ' });
+    }
   } catch (error) {
     console.log(error);
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
