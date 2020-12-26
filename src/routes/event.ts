@@ -66,9 +66,10 @@ router.put('/', async (req: Request, res: Response) => {
   let hospcode: string = req.decoded.hospcode;
   const updatedBy: string = req.decoded.id;
   const eventId: string = req.body.eventId;
+
   const placeDetail: string = req.body.placeDetail;
-  const distinctCode: string = req.body.distinctCode;
-  const subdistinceCode: string = req.body.subdistinceCode;
+  const districtCode: string = req.body.districtCode;
+  const subdistrictCode: string = req.body.subdistrictCode;
   const provinceCode: string = req.body.provinceCode;
   const zipcode: string = req.body.zipcode;
   const isActived: string = req.body.isActived;
@@ -76,25 +77,38 @@ router.put('/', async (req: Request, res: Response) => {
   const endDate: string = req.body.endDate;
   try {
 
-    if (distinctCode && subdistinceCode && provinceCode && startDate) {
-      let code = randomNumber(4);
-      while ((await eventModel.checkCodeDup(db, code)).length > 0) {
-        code = randomNumber(4);
-      }
+    if (eventId) {
 
-      const data: any = {
-        code,
-        place_detail: placeDetail,
-        distinct_code: distinctCode,
-        subdistince_code: subdistinceCode,
-        province_code: provinceCode,
-        zipcode,
-        is_actived: isActived,
-        start_date: startDate,
-        end_date: endDate,
-        updated_by: updatedBy,
-        hospcode
+      const data: any = {};
+      if (placeDetail) {
+        data.place_detail = placeDetail;
       }
+      if (districtCode) {
+        data.district_code = districtCode;
+      }
+      if (subdistrictCode) {
+        data.subdistrict_code = subdistrictCode;
+      }
+      if (provinceCode) {
+        data.province_code = provinceCode;
+      }
+      if (provinceCode) {
+        data.placeDetail = placeDetail;
+      }
+      if (zipcode) {
+        data.zipcode = zipcode;
+      }
+      if (isActived) {
+        data.is_actived = isActived;
+      }
+      if (startDate) {
+        data.start_date = startDate;
+      }
+      if (endDate) {
+        data.end_date = endDate;
+      }
+      data.updatedBy = updatedBy;
+
       const rs: any = await eventModel.updateEvent(db, eventId, data);
       res.send({ ok: true, rows: data });
     } else {
