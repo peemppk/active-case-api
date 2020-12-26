@@ -15,4 +15,17 @@ export class EventModel {
       .where('hospcode', hospcode)
       .orderBy('id', 'DESC')
   }
+
+  checkCodeDup(db: Knex, code) {
+    return db('events')
+      .where('code', code)
+  }
+  saveEvent(db: Knex, data) {
+    return db('events')
+      .insert(data);
+  }
+  updateEvent(db: Knex, data) {
+    return db('events')
+      .update(data);
+  }
 }
