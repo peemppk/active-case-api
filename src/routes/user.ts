@@ -20,27 +20,22 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
   let db = req.db;
-  const titleName: string = req.body.titleName;
-  const firstName: string = req.body.firstName;
-  const lastName: string = req.body.lastName;
-  const telephone: string = req.body.telephone;
-  const email: string = req.body.email;
-  const hospcode: string = req.body.hospcode;
+  const data = req.body;
   try {
-    if (firstName && lastName && telephone && hospcode) {
+    const datas = [];
+    for (const i of data) {
       const data: any = {
-        title_name: titleName,
-        first_name: firstName,
-        last_name: lastName,
-        telephone: telephone,
-        email: email,
-        hospcode: hospcode
+        title_name: i.titleName,
+        first_name: i.firstName,
+        last_name: i.lastName,
+        telephone: i.telephone,
+        email: i.email,
+        hospcode: i.hospcode
       }
-      const rs: any = await userModel.saveUser(db, data);
-      res.send({ ok: true, rows: rs });
-    } else {
-      res.send({ ok: false, error: 'parameter ไม่ครบ' });
+      datas.push(data);
     }
+    await userModel.saveUser(db, datas);
+    res.send({ ok: true });
   } catch (error) {
     console.log(error);
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
