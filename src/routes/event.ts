@@ -23,8 +23,8 @@ router.post('/', async (req: Request, res: Response) => {
   let hospcode: string = req.decoded.hospcode;
   const createdBy: string = req.decoded.id;
   const placeDetail: string = req.body.placeDetail;
-  const distinctCode: string = req.body.distinctCode;
-  const subdistinceCode: string = req.body.subdistinceCode;
+  const districtCode: string = req.body.districtCode;
+  const subdistrictCode: string = req.body.subdistrictCode;
   const provinceCode: string = req.body.provinceCode;
   const zipcode: string = req.body.zipcode;
   const isActived: string = req.body.isActived;
@@ -32,17 +32,16 @@ router.post('/', async (req: Request, res: Response) => {
   const endDate: string = req.body.endDate;
   try {
 
-    if (distinctCode && subdistinceCode && provinceCode && startDate) {
+    if (districtCode && subdistrictCode && provinceCode && startDate) {
       let code = randomNumber(4);
       while ((await eventModel.checkCodeDup(db, code)).length > 0) {
         code = randomNumber(4);
       }
-
       const data: any = {
         code,
         place_detail: placeDetail,
-        distinct_code: distinctCode,
-        subdistince_code: subdistinceCode,
+        district_code: districtCode,
+        subdistrict_code: subdistrictCode,
         province_code: provinceCode,
         zipcode,
         is_actived: isActived,
