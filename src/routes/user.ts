@@ -30,6 +30,7 @@ router.post('/', async (req: Request, res: Response) => {
         last_name: i.lastName,
         telephone: i.telephone,
         email: i.email,
+        cid: i.cid,
         hospcode: i.hospcode
       }
       datas.push(data);
@@ -52,6 +53,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   const telephone: string = req.body.telephone;
   const email: string = req.body.email;
   const hospcode: string = req.body.hospcode;
+  const cid: string = req.body.cid;
   try {
     if (firstName && lastName && telephone && hospcode) {
       const data: any = {
@@ -60,7 +62,7 @@ router.put('/:id', async (req: Request, res: Response) => {
         last_name: lastName,
         telephone: telephone,
         email: email,
-        hospcode: hospcode
+        cid: cid
       }
       await userModel.updateUser(db, id, data);
       res.send({ ok: true });
