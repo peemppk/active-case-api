@@ -26,7 +26,7 @@ router.post('/', async (req: Request, res: Response) => {
   const distinctCode: string = req.body.distinctCode;
   const subdistinceCode: string = req.body.subdistinceCode;
   const provinceCode: string = req.body.provinceCode;
-  const zipccode: string = req.body.zipccode;
+  const zipcode: string = req.body.zipcode;
   const isActived: string = req.body.isActived;
   const startDate: string = req.body.startDate;
   const endDate: string = req.body.endDate;
@@ -44,7 +44,7 @@ router.post('/', async (req: Request, res: Response) => {
         distinct_code: distinctCode,
         subdistince_code: subdistinceCode,
         province_code: provinceCode,
-        zipccode,
+        zipcode,
         is_actived: isActived,
         start_date: startDate,
         end_date: endDate,
@@ -71,7 +71,7 @@ router.put('/', async (req: Request, res: Response) => {
   const distinctCode: string = req.body.distinctCode;
   const subdistinceCode: string = req.body.subdistinceCode;
   const provinceCode: string = req.body.provinceCode;
-  const zipccode: string = req.body.zipccode;
+  const zipcode: string = req.body.zipcode;
   const isActived: string = req.body.isActived;
   const startDate: string = req.body.startDate;
   const endDate: string = req.body.endDate;
@@ -89,7 +89,7 @@ router.put('/', async (req: Request, res: Response) => {
         distinct_code: distinctCode,
         subdistince_code: subdistinceCode,
         province_code: provinceCode,
-        zipccode,
+        zipcode,
         is_actived: isActived,
         start_date: startDate,
         end_date: endDate,
