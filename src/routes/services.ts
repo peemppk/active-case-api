@@ -40,5 +40,23 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
+router.post('/map', async (req: Request, res: Response) => {
+  let serialCode: string = req.body.serialCode;
+  let eventId: string = req.body.eventId;
+  let labCode: string = req.body.labCode;
+  let db = req.db;
+  try {
+    const info: any = await serviceModel.findInfo(db, serialCode, eventId);
+    const data: any = {
+      
+    }
+    const rs: any = await serviceModel.saveService(db, data);
+    res.send({ ok: true, rows: rs });
+  } catch (error) {
+    console.log(error);
+    res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
+  }
+});
+
 
 export default router;

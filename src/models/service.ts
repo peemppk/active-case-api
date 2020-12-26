@@ -5,8 +5,20 @@ export class ServiceModel {
   getService(db: Knex) {
     return db('services');
   }
-  saveService(db: Knex,data) {
+
+  saveService(db: Knex, data) {
     return db('services')
-    .insert(data,'id')
+      .insert(data, 'id')
+  }
+
+  saveServiceDetail(db: Knex, data) {
+    return db('service_details')
+      .insert(data, 'id')
+  }
+
+  findInfo(db: Knex, serialNo, eventId) {
+    return db('services')
+      .where('serial_no', serialNo)
+      .where('event_id', eventId)
   }
 }
