@@ -23,16 +23,35 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/edit', async (req: Request, res: Response) => {
+
+  let db = req.db;
+  let telephone = req.query.telephone;
+  try {
+    const rs: any = await serviceModel.getEditService(db, telephone);
+    res.send({ ok: true, rows: rs });
+  } catch (error) {
+    console.log(error);
+    res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
+  }
+});
+
 router.post('/', async (req: Request, res: Response) => {
-  let serialCode: string = req.body.serialCode;
   let labCode: string = req.body.labCode;
-  let eventId: string = req.body.eventId;
+  let data: string = req.body.data;
   let db = req.db;
   try {
-    const data: any = {
-
-    }
+    console.log(labCode, data);
     const rs: any = await serviceModel.saveService(db, data);
+    const serviceId = rs;
+    if (labCode) {
+      const dataDetails = {
+        service_id: serviceId,
+        specimen_code: labCode,
+      }
+      const rs: any = await serviceModel.saveServiceDetails(db, dataDetails);
+    }
+    console.log(rs);
     res.send({ ok: true, rows: rs });
   } catch (error) {
     console.log(error);
