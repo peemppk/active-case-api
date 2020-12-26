@@ -184,13 +184,15 @@ router.post('/pre', async (req: Request, res: Response) => {
 
   let db = req.db;
   try {
-    if (nationTypeId && patientType && gender) {
+    if (nationTypeId && gender) {
       const data: any = {
         first_name: firstName,
         last_name: lastName,
         title_name: titleName,
         birth_date: birthDate,
         telephone_boss: telephoneBoss,
+        nation_type_td: nationTypeId,
+        gender: gender,
         telephone,
         cid,
         passport
