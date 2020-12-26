@@ -8,7 +8,8 @@ export class UserModel {
     if (hospcode) {
       sql.where('hospcode', hospcode)
     }
-    sql.orderBy('id', 'DESC')
+    sql.where('is_deleted', 'N')
+      .orderBy('id', 'DESC')
     return sql;
   }
 
@@ -16,9 +17,16 @@ export class UserModel {
     return db('users')
       .insert(data, 'id');
   }
+  
   updateUser(db: Knex, id, data) {
     return db('users')
       .update(data)
+      .where('id', id)
+  }
+
+  removeUser(db: Knex, id) {
+    return db('users')
+      .update('is_deleted', 'Y')
       .where('id', id)
   }
 }
