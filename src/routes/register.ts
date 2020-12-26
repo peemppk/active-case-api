@@ -191,7 +191,7 @@ router.post('/pre', async (req: Request, res: Response) => {
         title_name: titleName,
         birth_date: birthDate,
         telephone_boss: telephoneBoss,
-        nation_type_td: nationTypeId,
+        nation_type_id: nationTypeId,
         gender: gender,
         telephone,
         cid,
