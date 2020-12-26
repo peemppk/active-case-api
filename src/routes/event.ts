@@ -107,7 +107,7 @@ router.put('/', async (req: Request, res: Response) => {
       if (endDate) {
         data.end_date = endDate;
       }
-      data.updatedBy = updatedBy;
+      data.updated_by = updatedBy;
 
       const rs: any = await eventModel.updateEvent(db, eventId, data);
       res.send({ ok: true, rows: data });
