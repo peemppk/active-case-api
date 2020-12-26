@@ -121,10 +121,12 @@ router.put('/', async (req: Request, res: Response) => {
 });
 
 router.get('/check-event', async (req: Request, res: Response) => {
-  let eventCode: string = req.body.eventCode;
+  let eventCode: string = req.query.eventCode;
   let hospcode: string = req.decoded.hospcode;
   let db = req.db;
   try {
+    console.log();
+    
     const rs: any = await eventModel.checkEvent(db, hospcode, eventCode);
     if (rs.length) {
       res.send({ ok: true, rows: rs });
