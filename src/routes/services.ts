@@ -43,15 +43,21 @@ router.post('/', async (req: Request, res: Response) => {
 router.post('/map', async (req: Request, res: Response) => {
   let serialCode: string = req.body.serialCode;
   let eventId: string = req.body.eventId;
-  let labCode: string = req.body.labCode;
+  let specimenCode: string = req.body.specimenCode;
   let db = req.db;
   try {
     const info: any = await serviceModel.findInfo(db, serialCode, eventId);
-    const data: any = {
-      
+    if(info.length){
+      const data: any = {
+       service_id : info[0].od,
+       specimen_code:specimenCode
+      }
+      const rs: any = await serviceModel.saveServiceDetail(db, data);
+      res.send({ ok: true, rows: rs });
+
+    } else {
+      res.send({ok:false,error:'เลขอ้างอิงบุคคลยังไม่ได้ลงทะเบียน'});
     }
-    const rs: any = await serviceModel.saveService(db, data);
-    res.send({ ok: true, rows: rs });
   } catch (error) {
     console.log(error);
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
