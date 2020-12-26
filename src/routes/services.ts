@@ -1,35 +1,44 @@
-import { Login } from '../models/login';
-import { BasicModel } from '../models/basic';
+import { ServiceModel } from '../models/service';
 import * as express from 'express';
 import { Router, Request, Response } from 'express';
 import { Jwt } from '../models/jwt';
-const basicModel = new BasicModel();
-const loginModel = new Login();
+const serviceModel = new ServiceModel();
 import * as HttpStatus from 'http-status-codes';
 
 const jwt = new Jwt();
 
 const router: Router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send({ ok: true, message: 'Welcome to RESTful api server!', code: HttpStatus.OK });
-});
 
-router.get('/check-event', async (req: Request, res: Response) => {
-  let eventCode: string = req.body.eventCode;
-  let hospcode: string = req.decoded.hospcode;
+
+router.get('/', async (req: Request, res: Response) => {
+
   let db = req.db;
   try {
-    const rs: any = await loginModel.checkEvent(db, hospcode, eventCode);
-    if(rs.length){
-      res.send({ ok: true, rows: rs });
-    } else {
-      res.send({ ok: false });
-    }
+    const rs: any = await serviceModel.getService(db);
+    res.send({ ok: true, rows: rs });
   } catch (error) {
     console.log(error);
     res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
   }
 });
+
+router.post('/', async (req: Request, res: Response) => {
+  let serialCode: string = req.body.serialCode;
+  let labCode: string = req.body.labCode;
+  let eventId: string = req.body.eventId;
+  let db = req.db;
+  try {
+    const data: any = {
+
+    }
+    const rs: any = await serviceModel.saveService(db, data);
+    res.send({ ok: true, rows: rs });
+  } catch (error) {
+    console.log(error);
+    res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
+  }
+});
+
 
 export default router;
