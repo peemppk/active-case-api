@@ -18,6 +18,18 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/info', async (req: Request, res: Response) => {
+  let db = req.db;
+  let id: any = req.query.id;
+  try {
+    const rs: any = await eventModel.getEventInfo(db, id);
+    res.send({ ok: true, rows: rs });
+  } catch (error) {
+    console.log(error);
+    res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
+  }
+});
+
 router.post('/', async (req: Request, res: Response) => {
   let db = req.db;
   let hospcode: string = req.decoded.hospcode;
@@ -126,7 +138,7 @@ router.get('/check-event', async (req: Request, res: Response) => {
   let db = req.db;
   try {
     console.log();
-    
+
     const rs: any = await eventModel.checkEvent(db, hospcode, eventCode);
     if (rs.length) {
       res.send({ ok: true, rows: rs });
