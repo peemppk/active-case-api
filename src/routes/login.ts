@@ -63,4 +63,21 @@ router.post('/verify', async (req: Request, res: Response) => {
   }
 });
 
+
+router.post('/user', async (req: Request, res: Response) => {
+  let telephone: string = req.body.telephone;
+  let db = req.db;
+  try {
+    if (telephone) {
+      const rsp = await loginModel.sendOTP(telephone);
+      res.send(rsp);
+    } else {
+      res.send({ ok: false, error: 'ไม่พบเบอร์โทรศัพท์' });
+    }
+  } catch (error) {
+    console.log(error);
+
+    res.send({ ok: false, error: error.message, code: HttpStatus.INTERNAL_SERVER_ERROR });
+  }
+});
 export default router;

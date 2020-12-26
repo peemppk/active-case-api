@@ -8,4 +8,9 @@ export class RegisterModel {
     return db('pre_registers')
       .where('telephone', telephone)
   }
+
+  savePreRigister(db: Knex, data) {
+    return db('pre_registers')
+      .insert(data);
+  }
 }
