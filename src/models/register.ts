@@ -5,17 +5,17 @@ export class RegisterModel {
 
 
   getPreRegister(db: Knex, telephone) {
-    return db('pre_registers')
+    return db('registers')
       .where('telephone', telephone)
   }
 
   savePreRegister(db: Knex, data) {
-    return db('pre_registers')
+    return db('registers')
       .insert(data,'id');
   }
 
   updatePreRegister(db:Knex,id,data){
-    return db('pre_registers')
+    return db('registers')
     .update(data)
     .where('id',id);
   }
